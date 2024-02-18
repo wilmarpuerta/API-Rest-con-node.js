@@ -1,13 +1,12 @@
 const express = require('express');
-
+const userRouter = require('./app/routers/user')
+const itemsRouter = require('./app/routers/items')
 const app = express();
 
 const port = 3002;
-app.get('/', (req, res) => {
-    res.send({
-        data: 'Hello word'
-    })
-})
+
+app.use(userRouter);
+app.use(itemsRouter);
 
 app.listen(port, () => {
     console.log('La aplicacion esta en linea');
