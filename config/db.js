@@ -1,25 +1,23 @@
-const mongoose = require('mongoose');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const DB_URI = `http://localhost:3000`
+const DB_URI = `mongodb+srv://wilmarandrespuertajaramillo:Vy4YOFlRCUKojwEk@cluster0.qbpisik.mongodb.net/?retryWrites=true&w=majority`
 
-module.exports = () => {
-    const connect = () => {
-        mongoose.connect(
-            DB_URI,
-            {
-                keepAlive: true,
-                useNewUrelParser: true,
-                useUnifiedTopology: true
-            },
-            (err) => {
-                if (err) {
-                    console.log('DB: ERROR!!!')
-                }
-                else {
-                    console.log('Conecion correcta!!!')
-                }
-            }
-        )
+
+const client = new MongoClient(DB_URI, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
     }
-    connect();
+});
+
+async function run() {
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Conexión exitosa!");
+    } finally {
+        await client.close();
+    }
 }
+run().catch(console.dir);
