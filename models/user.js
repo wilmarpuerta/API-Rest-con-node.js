@@ -1,20 +1,22 @@
-const mongose = require('mongoose');
+const mongoose = require('mongoose');
+// mongoose.connect("mongodb+srv://wilmarandrespuertajaramillo:Vy4YOFlRCUKojwEk@cluster0.qbpisik.mongodb.net/?retryWrites=true&w=majority")
 
-const UserScheme = new mongose.Schema(
-    {
-        name: {
-            type: String
-        },
-        avatar: {
-            type: String
-            // default: 'https://image.com'
-        },
-        email: {
-            type: String,
-            unique: true,
-            required: true
-        }
-    }
-)
+const UserSchema = new mongoose.Schema({
+    username: String,
+    imguser: String,
+    password: String,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    phone: String,
+    birthday: String,
+    money: Number,
+    posts: [String]
+});
 
-module.exports = mongose.model('user', UserScheme)
+
+const UserModel = mongoose.model('User', UserSchema);
+
+module.exports = UserModel;

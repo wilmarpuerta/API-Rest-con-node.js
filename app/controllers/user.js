@@ -1,3 +1,11 @@
+const model = require('../../models/user')
+
 exports.getData = (req, res) => {
-    res.send({ data: 'Esto viene desde User' })
+    model.find()
+        .then((res) => {
+            res.status(200).json(res);
+        })
+        .catch((err) => {
+            res.status(500).json(err)
+        })
 }
